@@ -1,0 +1,21 @@
+# modules
+
+node_modules
+node_modules/
+
+# IDEs
+
+.vscode
+.idea
+
+# binary data
+
+data/*
+
+# credentials
+
+config/secret.json
+
+# internal documents
+
+vpm.xml
