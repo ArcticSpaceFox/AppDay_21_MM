@@ -1,0 +1,11 @@
+{
+  "http": {
+    "host": "0.0.0.0",
+    "port": 6002
+  },
+  "database": {
+    "secret": true,
+    "dialect": "sqlite",
+    "storage": "data/storage.sqlite"
+  }
+}

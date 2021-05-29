@@ -1,0 +1,20 @@
+{
+	"user": [{
+		"id": 1,
+		"email": "max.mustermann@example.com",
+		"name": "Max",
+		"lastName": "Mustermann",
+		"imageUrl": "",
+		"born": "2000-01-01",
+		"minAge": 20,
+		"maxAge": 25,
+		"createdAt": "2000-01-01"
+	}],
+	"study-group": [],
+	"tag": [],
+	"question": [],
+	"response": [],
+	"allocate": [],
+	"tag_group": [],
+	"tag_question": []
+}

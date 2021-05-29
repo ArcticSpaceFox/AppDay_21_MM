@@ -1,0 +1,18 @@
+# modules
+
+node_modules
+node_modules/
+
+# IDEs
+
+.vscode
+.idea
+
+# binary data
+
+data/*.sqlite
+data/*.http
+
+# credentials
+
+configuration/secret.json
