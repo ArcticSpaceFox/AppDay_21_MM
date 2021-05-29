@@ -7,8 +7,6 @@ async function createApplication(configuration, options) {
 	app.set("configuration", configuration);
 
 	app.use(express.json());
-
-	app.use(express.json());
 	app.use(express.urlencoded({ extended: true }));
 	app.configure(express.rest());
 

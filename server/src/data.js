@@ -78,6 +78,7 @@ async function main() {
 	}
 
 	const doReset = (args[args.length - 1] === "--reset");
+	console.log("doReset", doReset);
 
 	const options = { path }
 

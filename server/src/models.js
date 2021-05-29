@@ -27,12 +27,14 @@ async function defineModels(sequelize) {
 		lastName: {
 			type: DataTypes.TEXT
 		},
+		password: {
+			type: DataTypes.TEXT
+		},
 		imageUrl: {
 			type: DataTypes.TEXT
 		},
 		born: {
-			type: DataTypes.DATE,
-			allowNull: false
+			type: DataTypes.DATE
 		},
 		minAge: {
 			type: DataTypes.INTEGER,
@@ -43,6 +45,16 @@ async function defineModels(sequelize) {
 			type: DataTypes.INTEGER,
 			defaultValue: 35,
 			allowNull: false
+		},
+		isPro: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false
+		},
+		faculty: {
+			type: DataTypes.INTEGER,
+		},
+		semester: {
+			type: DataTypes.INTEGER
 		},
 		createdAt: {
 			type: DataTypes.DATE,
@@ -62,6 +74,9 @@ async function defineModels(sequelize) {
 		name: {
 			type: DataTypes.TEXT,
 			allowNull: false
+		},
+		module: {
+			type: DataTypes.TEXT
 		}
 	}, {
 		tableName: "study_group"
@@ -123,6 +138,20 @@ async function defineModels(sequelize) {
 		tableName: "response"
 	});
 
+	// relations
+
+	const userStudyGroup = sequelize.define("userStudyGroup", {
+
+	}, {
+		tableName: "allocate"
+	});
+
+	const groupTag = sequelize.define("groupTag", {
+
+	}, {
+		tableName: "assign"
+	});
+
 	// associations
 
 	/*
@@ -175,15 +204,17 @@ model Response {
 	 */
 
 	// user
-	user.belongsToMany(studyGroup, { through: "allocate" });
-	user.hasMany(question);
+	user.belongsToMany(studyGroup, { through: userStudyGroup });
+	user.hasMany(question, {
+		foreignKey: "creator"
+	});
 
 	// study group
-	studyGroup.belongsToMany(user, { through: "allocate" });
-	studyGroup.belongsToMany(tag, { through: "tag_group" });
+	studyGroup.belongsToMany(user, { through: userStudyGroup });
+	studyGroup.belongsToMany(tag, { through: groupTag });
 
 	// tag
-	tag.belongsToMany(studyGroup, { through: "tag_group" });
+	tag.belongsToMany(studyGroup, { through: groupTag });
 	tag.belongsToMany(question, { through: "tag_question" })
 
 	// question
