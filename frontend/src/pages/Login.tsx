@@ -25,11 +25,13 @@ function Login() {
           email: email,
           imageUrl:
             "https://pbs.twimg.com/profile_images/1001710803261820928/DvdI4GJE_400x400.jpg",
-          fname: "Test",
-          lname: "User",
+          name: "Test",
+          lastname: "User",
           born: new Date().setFullYear(new Date().getFullYear()-10),
-          minage: 1,
-          maxage: 1
+          minAge: 1,
+          maxAge: 1,
+          createdAt: new Date(),
+          studiengruppen: [],
         };
         setUser(_temp);
         history.push("/mygroups")

@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { User } from "../context/User";
 
 function Forum() {
+  const faqitems: Array<{id:number, title:string, author:string, description:string, tags: Array<string>}> = [
+    {
+      id: 1,
+      title: "Was genau ist Flankencodierung?",
+      author: "John Cena",
+      description:
+        "In der letzten Übung hat Herr Mundt uns Flankencodierung erklärt, aber ich habe es nicht ganz verstanden.",
+      tags: ["RNDS", "Codierung"],
+    },
+    {
+      id:2,
+      title: "Wie hat Cesar das noch macl verschlüsselt?",
+      author: "Augustus",
+      description:
+        "Ich habe diese Nachricht aber kann sie nicht lesen, irgendwie verschlüsselt?",
+      tags: ["RNDS", "Crypto"],
+    },
+    {
+      id:3,
+      title: "Was soll das heißen Norbert Blum hat das P=NP Problem gelöst?!",
+      author: "John Cena",
+      description:
+        "https://www.vice.com/de/article/evvp34/deutscher-soll-gerade-eines-der-wichtigsten-informatik-probleme-unserer-zeit-gelost-haben",
+      tags: ["TINF"],
+    },
+  ];
+
+  const [search, setSearch] = useState("");
+
   return (
     <div className="max-w-7xl w-full mx-auto">
       <div className="flex gap-4">
@@ -15,6 +45,8 @@ function Forum() {
             <input
               type="text"
               name="search"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
               className="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg"
               placeholder="Suchen..."
             />
@@ -30,16 +62,40 @@ function Forum() {
             </div>
           </div>
         </div>
-        <div className="flex-grow grid grid-cols-1 gap-4"></div>
+        <div className="flex-grow grid grid-cols-1 gap-4">
+          {faqitems?.filter((item) => (item.title.indexOf(search) !== -1))?.map((f:any, i:number) => (
+              <FAQitem
+                key={i}
+                {...f}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
 }
 
-const FAQitem = (title:string, description:string, tags: Array<string>, participants: Array<User>) => (
-  <div>
-
+const Tag = ({ title }: any) => (
+  <div className="bg-blue-500 text-white inline-flex items-center text-sm rounded shadow-lg overflow-hidden">
+    <span className="leading-relaxed truncate max-w-xs px-2">{title}</span>
   </div>
-)
+);
+
+const FAQitem = ({ id, title, description, tags, author }: any) => (
+  <Link to={`/question/${id}`}>
+  <div className="h-20 p-4 bg-white border shadow-sm rounded-md hover:shadow-xl transition-shadow cursor-pointer">
+    <div className="flex justify-between">
+      <div>
+      <p className="text-xl font-semibold inline">{title}</p>
+<p className="text-indigo-400 inline"> - {author}</p>
+      </div>
+      <div className="flex gap-2">
+        {tags.map((t:string,i:number) => <Tag key={i} title={t}/>)}
+      </div>
+    </div>
+    <p className="max-w-4xl truncate text-gray-500">{description}</p>
+  </div>
+  </Link>
+);
 
 export default Forum;

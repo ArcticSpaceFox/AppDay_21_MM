@@ -1,7 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 // Component
 function MeineGruppen() {
+  const history = useHistory();
+
   return (
     <div className="max-w-7xl mx-auto mt-10">
       <div className="w-full grid grid-rows-3 grid-flow-col gap-4">
@@ -39,21 +42,21 @@ function MeineGruppen() {
                   </tr>
                 </thead>
                 <tbody className="text-sm font-normal text-gray-700">
-                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
+                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer" onClick={() => history.push('/group/1')}>
                     <td className="px-4 py-4">RNDS pros</td>
                     <td className="px-4 py-4">
                       Rechnernetze und Datensicherheit
                     </td>
                     <td className="px-4 py-4">3</td>
                   </tr>
-                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-4">
+                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-4 cursor-pointer">
                     <td className="px-4 py-4 flex items-center">
                       Rosenke memes
                     </td>
                     <td className="px-4 py-4">Logik und Berechenbarkeit</td>
                     <td className="px-4 py-4">4</td>
                   </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
+                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4 cursor-pointer">
                     <td className="px-4 py-4">
                       IlleaglMemeberException("ADS")
                     </td>
@@ -83,12 +86,8 @@ function MeineGruppen() {
                     <td className="px-4 py-4">23</td>
                   </tr>
                   <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">
-                      AppDay - Markup Monkeys
-                    </td>
-                    <td className="px-4 py-4">
-                      FSR
-                    </td>
+                    <td className="px-4 py-4">AppDay - Markup Monkeys</td>
+                    <td className="px-4 py-4">FSR</td>
                     <td className="px-4 py-4">4</td>
                   </tr>
                 </tbody>

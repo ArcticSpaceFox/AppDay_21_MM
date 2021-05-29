@@ -20,9 +20,12 @@ import MeineGruppen from "./pages/MeineGruppen";
 import Gruppen from "./pages/Gruppen";
 import Profil from "./pages/Profil";
 import Forum from "./pages/Forum";
+import GroupDetail from "./pages/GroupDetail";
 
 // Contexts
 import UserContext, { UserProvider } from "./context/User";
+import Impressum from "./pages/Impressum";
+import QuestionDetail from "./pages/QuestionDetail";
 
 const ProtectedRoute = ({ restricted, children, ...rest }: any) => {
   const [user, _] = useContext(UserContext);
@@ -45,12 +48,18 @@ function App() {
   return (
     <UserProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-gray-100 flex flex-col">
           {/* NAVBAR */}
           <Navbar />
           {/* Router */}
           <div className="flex-grow flex min-h-full justify-center items-center">
             <Switch>
+              <ProtectedRoute restricted={true} path="/question/:id">
+                <QuestionDetail/>
+              </ProtectedRoute>
+              <ProtectedRoute restricted={true} path="/group/:id">
+                <GroupDetail />
+              </ProtectedRoute>
               <ProtectedRoute restricted={true} path="/forum">
                 <Forum />
               </ProtectedRoute>
@@ -69,6 +78,9 @@ function App() {
               </Route>
               <Route path="/signin">
                 <Login />
+              </Route>
+              <Route path="/impressum">
+                <Impressum />
               </Route>
               <Route path="/">
                 <Home />

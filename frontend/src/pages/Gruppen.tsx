@@ -1,7 +1,18 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+
+const Tag = ({title}:any) => (
+  <div className="bg-blue-500 text-white inline-flex items-center text-sm rounded shadow-lg overflow-hidden">
+    <span className="leading-relaxed truncate max-w-xs px-2">
+      {title}
+    </span>
+  </div>
+);
 
 // Component
 function Gruppen() {
+  const history = useHistory();
+
     return (
       <div className="mx-auto w-full max-w-7xl items-start">
         <div className="bg-white pb-4 px-4 rounded-md w-full shadow-lg">
@@ -37,33 +48,35 @@ function Gruppen() {
                 </tr>
               </thead>
               <tbody className="text-sm font-normal text-gray-700">
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
+                <tr
+                  className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer"
+                  onClick={() => history.push("/group/1")}
+                >
                   <td className="px-4 py-4">RNDS pros</td>
                   <td className="px-4 py-4">
                     Rechnernetze und Datensicherheit
                   </td>
-                  <td className="px-4 py-4">Netzwerke</td>
+                  <td className="px-4 py-4"><Tag title="Netzwerke"/></td>
                   <td className="px-4 py-4">3</td>
                 </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
+                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
                   <td className="px-4 py-4">[RIP] - Rostocker in Pyjamas</td>
                   <td className="px-4 py-4">Sonstiges</td>
-                  <td className="px-4 py-4">RIP</td>
+                  <td className="px-4 py-4"><Tag title="RIP" /> <Tag title="Gaming" /></td>
                   <td className="px-4 py-4">21</td>
                 </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
+                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
                   <td className="px-4 py-4">Furries Unite</td>
                   <td className="px-4 py-4">Sonstiges</td>
-                  <td className="px-4 py-4">Furry</td>
+                  <td className="px-4 py-4"><Tag title="Furry" /></td>
                   <td className="px-4 py-4">11</td>
                 </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
+                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
                   <td className="px-4 py-4">Software Snipers</td>
                   <td className="px-4 py-4">Softwaretechnik</td>
-                  <td className="px-4 py-4">Uni</td>
+                  <td className="px-4 py-4"><Tag title="Progrmmieren" /></td>
                   <td className="px-4 py-4">6</td>
                 </tr>
-
               </tbody>
             </table>
           </div>

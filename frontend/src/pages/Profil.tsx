@@ -20,11 +20,11 @@ function Profil() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [name, setname] = useState("");
+  const [lastname, setlastname] = useState("");
   const [bdate, setBday] = useState(new Date());
-  const [minage, setMinage] = useState(17);
-  const [maxage, setMaxage] = useState(35);
+  const [minAge, setminAge] = useState(17);
+  const [maxAge, setmaxAge] = useState(35);
 
   // Functions
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,8 +37,8 @@ function Profil() {
   useEffect(() => {
     if (user) {
       setEmail(user.email);
-      setFname(user.fname || "");
-      setLname(user.lname || "");
+      setname(user.name || "");
+      setlastname(user.lastname || "");
       setBday(new Date(user.born));
     }
   }, [user]);
@@ -113,8 +113,8 @@ function Profil() {
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
-                  value={fname}
-                  onChange={(e) => setFname(e.target.value)}
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
                   required
                 />
               </div>
@@ -125,8 +125,8 @@ function Profil() {
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
-                  value={lname}
-                  onChange={(e) => setLname(e.target.value)}
+                  value={lastname}
+                  onChange={(e) => setlastname(e.target.value)}
                   required
                 />
               </div>
@@ -258,8 +258,8 @@ function Profil() {
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="number"
-                  value={minage}
-                  onChange={(e) => setMinage(Number(e.target.value))}
+                  value={minAge}
+                  onChange={(e) => setminAge(Number(e.target.value))}
                   required
                 />
               </div>
@@ -270,8 +270,8 @@ function Profil() {
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="number"
-                  value={maxage}
-                  onChange={(e) => setMaxage(Number(e.target.value))}
+                  value={maxAge}
+                  onChange={(e) => setmaxAge(Number(e.target.value))}
                   required
                 />
               </div>

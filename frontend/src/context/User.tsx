@@ -2,13 +2,27 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 
 export type User = {
     id: number,
-    fname: string | null,
-    lname: string | null,
+    name: string | null,
+    lastname: string | null,
     email: string,
     imageUrl: string | null,
     born: number | Date,
-    minage: number,
-    maxage: number,
+    minAge: number,
+    maxAge: number,
+    createdAt: number | Date,
+    studiengruppen: Array<StudienGruppe> | Array<null> | null,
+}
+
+export type StudienGruppe = {
+  id: number,
+  name: string,
+  members: Array<User>,
+  tags: Array<Tag>,
+}
+
+export type Tag = {
+  id: string,
+  name: string,
 }
 
 export const UserContext = React.createContext<[User | null, any]>([null, null]);

@@ -215,7 +215,7 @@ function Navbar() {
               </div>
               <div className="ml-3">
                 <div className="text-base font-medium leading-none text-indigo-600">
-                  {user?.fname || "Anon"}
+                  {user?.name || "Anon"}
                 </div>
                 <div className="text-sm font-medium leading-none text-gray-700">
                   {user?.email || "anon@none"}
