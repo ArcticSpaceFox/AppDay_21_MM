@@ -7,12 +7,11 @@ import React, {
 } from "react";
 
 // Libs
-import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // Context
-import { UserContext } from "../context/User";
+import { User, UserContext } from "../context/User";
 
 // Component
 function Profil() {
@@ -27,12 +26,20 @@ function Profil() {
   const [minage, setMinage] = useState(17);
   const [maxage, setMaxage] = useState(35);
 
+  // Functions
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!user) return;
+  }
+
   // Effects
   useEffect(() => {
     if (user) {
       setEmail(user.email);
       setFname(user.fname || "");
       setLname(user.lname || "");
+      setBday(new Date(user.born));
     }
   }, [user]);
 
@@ -49,7 +56,7 @@ function Profil() {
   return (
     <div className="inputs w-full max-w-2xl p-6 mx-auto">
       <h2 className="text-2xl text-gray-900">Mein Profil</h2>
-      <form className="mt-6 border-t border-gray-400 pt-4">
+      <form className="mt-6 border-t border-gray-400 pt-4" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-full px-3 mb-6">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">

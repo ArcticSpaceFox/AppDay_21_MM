@@ -6,6 +6,9 @@ export type User = {
     lname: string | null,
     email: string,
     imageUrl: string | null,
+    born: number | Date,
+    minage: number,
+    maxage: number,
 }
 
 export const UserContext = React.createContext<[User | null, any]>([null, null]);

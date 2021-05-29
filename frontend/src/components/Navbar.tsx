@@ -13,7 +13,7 @@ import UserContext from "../context/User";
 function Navbar() {
     // State
     const [mobile, setMobile] = useState(false);
-    const [user, setUser] = useContext(UserContext);
+    const [user, ] = useContext(UserContext);
     // UI
     return (
       <nav className="bg-white shadow-md">
@@ -45,6 +45,14 @@ function Navbar() {
                     className="text-gray-700 px-3 py-2 rounded-md text-sm font-medium hover:ring hover:ring-indigo-500"
                   >
                     Stöbern
+                  </NavLink>
+
+                  <NavLink
+                    to="/forum"
+                    activeClassName="text-indigo-600"
+                    className="text-gray-700 px-3 py-2 rounded-md text-sm font-medium hover:ring hover:ring-indigo-500"
+                  >
+                    Forum
                   </NavLink>
 
                   <NavLink
@@ -178,6 +186,14 @@ function Navbar() {
               className="hover:ring hover:ring-indigo-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
             >
               Stöbern
+            </NavLink>
+
+            <NavLink
+              to="/forum"
+              activeClassName="bg-indigo-600 text-gray-50"
+              className="hover:ring hover:ring-indigo-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+            >
+              Forum
             </NavLink>
 
             <NavLink

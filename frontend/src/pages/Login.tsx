@@ -24,9 +24,12 @@ function Login() {
           id: 1,
           email: email,
           imageUrl:
-            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            fname: 'Test',
-            lname: 'User'
+            "https://pbs.twimg.com/profile_images/1001710803261820928/DvdI4GJE_400x400.jpg",
+          fname: "Test",
+          lname: "User",
+          born: new Date().setFullYear(new Date().getFullYear()-10),
+          minage: 1,
+          maxage: 1
         };
         setUser(_temp);
         history.push("/mygroups")
