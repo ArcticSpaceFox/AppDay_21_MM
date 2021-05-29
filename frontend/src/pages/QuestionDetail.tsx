@@ -69,7 +69,7 @@ function QuestionDetail(props: any) {
         <div>
           <Answer
             author="Adrian"
-            content="Flankencodierung ist ein weg um Fehler durch Spannugs-Schwankungen zu umgehen!"
+            content="Flankencodierung ist ein Weg um Messfehler durch Spannugs-Verschiebung zu umgehen!"
             votes={2}
           />
           <Answer

@@ -11,20 +11,27 @@ const Tag = ({title}:any) => (
 
 // Component
 function Gruppen() {
-  const history = useHistory();
-
-  const [gruppen, setGruppen] = useState<Array<any>>();
+  const [gruppen, setGruppen] = useState<any>();
   const [search, setSearch] = useState("");
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    fetch("api.noc-rostock.space/study-group", {}).then(res => res.json()).then(data => {
-      setGruppen(data.data);
-      setOffset(Number(data.offset));
-      setTotal(Number(data.total));
-    });
-  }, [])
+    console.log("search", search)
+    fetch(
+      "https://api.noc-rostock.space/search-group?content=" +
+        (search || "") +
+        "&$skip="+offset+"&$limit="+10,
+      {}
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setGruppen(data.data);
+        setOffset(Number(data.skip));
+        setTotal(Number(data.total));
+      });
+  }, [search])
 
     return (
       <div className="mx-auto w-full max-w-7xl items-start">
@@ -35,6 +42,8 @@ function Gruppen() {
               <input
                 type="text"
                 name="search"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
                 className="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg"
                 placeholder="Suchen..."
               />
@@ -61,43 +70,7 @@ function Gruppen() {
                 </tr>
               </thead>
               <tbody className="text-sm font-normal text-gray-700">
-                <tr
-                  className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer"
-                  onClick={() => history.push("/group/1")}
-                >
-                  <td className="px-4 py-4">RNDS pros</td>
-                  <td className="px-4 py-4">
-                    Rechnernetze und Datensicherheit
-                  </td>
-                  <td className="px-4 py-4">
-                    <Tag title="Netzwerke" />
-                  </td>
-                  <td className="px-4 py-4">3</td>
-                </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
-                  <td className="px-4 py-4">[RIP] - Rostocker in Pyjamas</td>
-                  <td className="px-4 py-4">Sonstiges</td>
-                  <td className="px-4 py-4">
-                    <Tag title="RIP" /> <Tag title="Gaming" />
-                  </td>
-                  <td className="px-4 py-4">21</td>
-                </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
-                  <td className="px-4 py-4">Furries Unite</td>
-                  <td className="px-4 py-4">Sonstiges</td>
-                  <td className="px-4 py-4">
-                    <Tag title="Furry" />
-                  </td>
-                  <td className="px-4 py-4">11</td>
-                </tr>
-                <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer">
-                  <td className="px-4 py-4">Software Snipers</td>
-                  <td className="px-4 py-4">Softwaretechnik</td>
-                  <td className="px-4 py-4">
-                    <Tag title="Progrmmieren" />
-                  </td>
-                  <td className="px-4 py-4">6</td>
-                </tr>
+                {gruppen?.map((m:any,i:number) => <Gruppe key={i} {...m}/>)}
               </tbody>
             </table>
           </div>
@@ -137,7 +110,7 @@ function Gruppen() {
                 </p>
               )
             )}
-            
+
             <svg
               className="h-6 w-6"
               width="24"
@@ -159,20 +132,23 @@ function Gruppen() {
     );
 }
 
-const Gruppe = ({ id, history, name, module, tags, users }: any) => (
+const Gruppe = ({ id, name, module, tags, users }: any) => {
+  const history = useHistory();
+  return(
   <tr
     className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer"
     onClick={() => history.push("/group/"+id)}
   >
     <td className="px-4 py-4">{name}</td>
-    <td className="px-4 py-4">{module}</td>
-    <td className="px-4 py-4">
-      {tags.map((t:string, i:number) => (
-        <Tag id={i} title={t} />
+    <td className="px-4 py-4">{module || <p className="font-mono">[NO MODULE]</p>}</td>
+    <td className="px-4 py-4 flex gap-2">
+      {tags  && tags.map((t:any, i:number) => (
+        <Tag id={i} title={t.name} />
       ))}
+      {!tags && <p className="uppercase font-mono">[Not tagged]</p>}
     </td>
-    <td className="px-4 py-4">{users}</td>
+    <td className="px-4 py-4">{users.length}</td>
   </tr>
-);
+)};
 
 export default Gruppen;

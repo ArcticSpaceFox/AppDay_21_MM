@@ -14,14 +14,16 @@ function MeineGruppen() {
   const [gruppen, setGruppen] = useState<Array<any>>([]);
 
   useEffect(() => {
-    fetch("https://api.noc-rostock.space/user-group/" + user?.id, {})
+    fetch("https://api.noc-rostock.space/user?id=" + user?.id, {})
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        let {"study-groups":sg} = data.data[0];
+        console.log(sg);
         setTotal(data.total);
-        setOffset(data.offset);
-        setGruppen(data.data);
+        setOffset(data.skip);
+        setGruppen(sg);
       });
+      console.log("Redone")
   }, []);
 
   return (
@@ -171,7 +173,7 @@ function MeineGruppen() {
         {/* nachrichten */}
         <div className="row-span-2">
           <p className="font-mono text-xl mb-4">Nachrichten</p>
-          <div className="grid grid-cols-1 gap-2">
+          {user?.name === "Karsten" ? (<div className="grid grid-cols-1 gap-2">
             <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden border">
               <div className="w-2 bg-indigo-600"></div>
               <div className="flex items-center px-2 py-3">
@@ -237,7 +239,7 @@ function MeineGruppen() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>) : <p className="font-mono">No new messages</p>}
         </div>
       </div>
     </div>

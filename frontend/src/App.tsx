@@ -33,11 +33,7 @@ const ProtectedRoute = ({ restricted, children, ...rest }: any) => {
     <Route
       {...rest}
       render={(props) =>
-        !user && restricted ? (
-          <Redirect to="/signin" />
-        ) : (
-          children
-        )
+        !user && restricted ? <Redirect to="/signin" /> : children
       }
     />
   );
@@ -55,7 +51,7 @@ function App() {
           <div className="flex-grow flex min-h-full justify-center items-center">
             <Switch>
               <ProtectedRoute restricted={true} path="/question/:id">
-                <QuestionDetail/>
+                <QuestionDetail />
               </ProtectedRoute>
               <ProtectedRoute restricted={true} path="/group/:id">
                 <GroupDetail />

@@ -14,7 +14,7 @@ function Forum() {
     },
     {
       id:2,
-      title: "Wie hat Cesar das noch macl verschlüsselt?",
+      title: "Wie hat Cesar das noch mal verschlüsselt?",
       author: "Augustus",
       description:
         "Ich habe diese Nachricht aber kann sie nicht lesen, irgendwie verschlüsselt?",

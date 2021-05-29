@@ -51,7 +51,7 @@ function Navbar() {
             </h1>
             <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
               Du suchst andere Kommilitonen mit denen du gemeinsam Fächer
-              durchgehen kannst? Bei der Bro-Boerse findest du Lerngruppen zu
+              durchgehen kannst? Bei der Studi-Boerse findest du Lerngruppen zu
               jedem Fach, mit Menschen die deine Interessen teilen
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
@@ -89,7 +89,7 @@ function Navbar() {
               <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
                 Studiengruppen sind manchmal schwer zu finden, und dann auch die
                 richtigen Leute. Wir bei{" "}
-                <span className="font-semibold">Bro-Boerse</span> nehmen dir
+                <span className="font-semibold">Studi-Boerse</span> nehmen dir
                 diese Aufgabe ab
               </p>
             </div>
@@ -143,9 +143,7 @@ function Navbar() {
                     </p>
                   </dt>
                   <dd className="mt-2 ml-16 text-base text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Maiores impedit perferendis suscipit eaque, iste dolor
-                    cupiditate blanditiis ratione.
+                    Wir sind komplett durch Spenden oder Unis finanziert, und open source damit wir gemeinsam eine bessere Plattform schaffen.
                   </dd>
                 </div>
 
@@ -173,9 +171,7 @@ function Navbar() {
                     </p>
                   </dt>
                   <dd className="mt-2 ml-16 text-base text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Maiores impedit perferendis suscipit eaque, iste dolor
-                    cupiditate blanditiis ratione.
+                    Wir nutzen eine moderne backend infrastruktur um ohne große Verzögerung dich auf dem stand zu halten, denn Zeit ist kostbar.
                   </dd>
                 </div>
 
@@ -203,9 +199,7 @@ function Navbar() {
                     </p>
                   </dt>
                   <dd className="mt-2 ml-16 text-base text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Maiores impedit perferendis suscipit eaque, iste dolor
-                    cupiditate blanditiis ratione.
+                    Wir helfen dir dich mehr mit anderen Studis auszutauschen. Keine direkter kontakt, und alles ist sicher. Wir geben nichts einfach so frei.
                   </dd>
                 </div>
               </dl>

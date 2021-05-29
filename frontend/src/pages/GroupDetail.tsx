@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 const Tag = ({ title }: any) => (
   <div className="bg-blue-500 text-white inline-flex items-center text-sm rounded shadow-lg overflow-hidden">
     <span className="leading-relaxed truncate max-w-xs px-2">{title}</span>
@@ -5,6 +8,18 @@ const Tag = ({ title }: any) => (
 );
 
 function GroupDetail() {
+  const { id }:any = useParams(); 
+  
+  const [gruppe, setGruppe] = useState<any>(null);
+  
+  useEffect(() => {
+    fetch("https://api.noc-rostock.space/study-group?id="+Number(id), {})
+    .then(res => res.json())
+    .then(data => {
+      setGruppe(data.data[0]);
+    });
+  }, [])
+
   return (
     <div className="mx-auto w-full max-w-7xl items-start">
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -28,19 +43,25 @@ function GroupDetail() {
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Name</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                RNDS pros
+                {gruppe?.name}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Modul</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Rechnernetze und Datensicherheit
+                {gruppe?.module || <p className="font-mono">[KEIN MODUL]</p>}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Tags</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <Tag title="Netwerke" />
+                {gruppe?.tags &&
+                  gruppe?.tags.map((t: string, i: number) => (
+                    <Tag id={i} title={t} />
+                  ))}
+                {!gruppe?.tags && (
+                  <p className="uppercase font-mono">[Not tagged]</p>
+                )}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -48,9 +69,13 @@ function GroupDetail() {
                 Gruppen Mitglieder
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex gap-2">
-                <Tag title="John Cena" />
-                <Tag title="Mathe Mann" />
-                <Tag title="Karsten Wolf" />
+                {gruppe?.users &&
+                  gruppe?.users.map((t: any, i: number) => (
+                    <Tag id={i} title={t.name} />
+                  ))}
+                {!gruppe?.users && (
+                  <p className="uppercase font-mono">[Leere gruppe]</p>
+                )}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -58,23 +83,7 @@ function GroupDetail() {
                 Beschreibung
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Die Entwicklung in der Rechentechnik begann mit autonomen
-                Rechnern, die nur von einem Nutzer zur Zeit verwendet werden
-                konnten, über zentrale Großrechner, die ihre Rechenleistung
-                mehreren Nutzern gleichzeitig anboten, welche jedoch meist in
-                unmittelbarer räumlicher Nähe der Rechenanlagen über Terminals
-                angeschlossen waren. Ende der sechziger Jahre wurde mit dem
-                ARPA-Netz die digitale Kommunikation erprobt und Mitte der
-                siebziger Jahre in einem bis heute geltenden Standard
-                festgelegt. Die dabei eingeführte Technik konnte zum Anschluss
-                an zentrale Rechner genutzt werden. Gleichzeitig entstand mit PC
-                und Arbeitsplatzrechnern eine Ablösung des
-                Zentralrechnerkonzepts hin zu dezentraler Rechenleistung. Damit
-                wurden zwar Leistungsprobleme gelöst, aber die Kommunikation
-                unter den Teilnehmern des Rechenbetriebs erschwert. Durch lokale
-                Netze und später durch den Anschluss an das Internet konnten
-                diese Probleme überwunden werden. Wir beschäftigen uns genau mit
-                diesen!
+                {gruppe?.description || <p className="font-mono">[NO DESCRIPTION]</p>}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
