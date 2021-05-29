@@ -24,7 +24,7 @@ function Navbar() {
                 <NavLink to="/">
                   <img
                     className="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                    src="https://media.discordapp.net/attachments/835930934522937375/848020947046367242/image0.png?width=750&height=682"
                     alt="Workflow"
                   />
                 </NavLink>

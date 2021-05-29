@@ -26,6 +26,10 @@ function Navbar() {
         "Fitness Gurus",
         "E-Sportler",
         "League Legends",
+        "Freizeit Hacker",
+        "Chemie Freunde",
+        "Netzwerker",
+        "System Verwalter",
       ].sort(() => Math.random() - 0.5),
     });
   }, []);
@@ -42,7 +46,7 @@ function Navbar() {
               </span>
               <span
                 id="typewriter"
-                className="hidden lg:block text-indigo-600 xl:inline"
+                className="hidden lg:inline text-indigo-600"
               ></span>
             </h1>
             <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">

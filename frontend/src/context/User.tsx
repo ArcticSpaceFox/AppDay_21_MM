@@ -3,7 +3,7 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 export type User = {
     id: number,
     name: string | null,
-    lastname: string | null,
+    lastName: string | null,
     email: string,
     imageUrl: string | null,
     born: number | Date,
@@ -11,6 +11,18 @@ export type User = {
     maxAge: number,
     createdAt: number | Date,
     studiengruppen: Array<StudienGruppe> | Array<null> | null,
+    isPro: boolean,
+    faculty: Faculty,
+    semester: number
+}
+
+export enum Faculty {
+  SONSTIGE = 0,
+  INFORMATIK = 1,
+  ITTI = 2,
+  WINF = 3,
+  AGRARING = 4,
+  SCHIFFSBAU = 5
 }
 
 export type StudienGruppe = {

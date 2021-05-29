@@ -20,21 +20,24 @@ function Login() {
     const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
         data.preventDefault();
 
-        let _temp: User = {
-          id: 1,
-          email: email,
-          imageUrl:
-            "https://pbs.twimg.com/profile_images/1001710803261820928/DvdI4GJE_400x400.jpg",
-          name: "Test",
-          lastname: "User",
-          born: new Date().setFullYear(new Date().getFullYear()-10),
-          minAge: 1,
-          maxAge: 1,
-          createdAt: new Date(),
-          studiengruppen: [],
-        };
-        setUser(_temp);
-        history.push("/mygroups")
+        fetch("https://api.noc-rostock.space/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setUser(data);
+            history.push("/mygroups");
+          })
+          .catch(e => console.error(e));
+
     }
     // UI
     return (

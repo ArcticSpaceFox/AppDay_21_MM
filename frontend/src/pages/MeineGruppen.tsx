@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import UserContext, { Faculty } from "../context/User";
 
 // Component
 function MeineGruppen() {
   const history = useHistory();
 
+  const [search, setSearch] = useState("");
+  const [total, setTotal] = useState(0);
+  const [offset, setOffset] = useState(0);
+
+  const [user] = useContext(UserContext);
+  const [gruppen, setGruppen] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    fetch("https://api.noc-rostock.space/user-group/" + user?.id, {})
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setTotal(data.total);
+        setOffset(data.offset);
+        setGruppen(data.data);
+      });
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto mt-10">
-      <div className="w-full grid grid-rows-3 grid-flow-col gap-4">
+      <div className="w-full grid grid-rows-3 grid-flow-col gap-6">
         {/* User liste */}
         <div className="row-span-3 col-span-2">
           <div className="bg-white pb-4 px-4 rounded-md w-full shadow-lg">
             <div className="flex justify-between w-full pt-6 ">
-              <p className="ml-3 text-lg font-semibold"> Meine Gruppen</p>
+              <p className="ml-3 mr-6 text-lg font-semibold"> Meine Gruppen</p>
               <div className="w-full sm:w-64 inline-block relative ">
                 <input
                   type="text"
                   name="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg"
                   placeholder="Suchen..."
                 />
@@ -42,54 +63,15 @@ function MeineGruppen() {
                   </tr>
                 </thead>
                 <tbody className="text-sm font-normal text-gray-700">
-                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer" onClick={() => history.push('/group/1')}>
-                    <td className="px-4 py-4">RNDS pros</td>
-                    <td className="px-4 py-4">
-                      Rechnernetze und Datensicherheit
-                    </td>
-                    <td className="px-4 py-4">3</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b border-gray-200 py-4 cursor-pointer">
-                    <td className="px-4 py-4 flex items-center">
-                      Rosenke memes
-                    </td>
-                    <td className="px-4 py-4">Logik und Berechenbarkeit</td>
-                    <td className="px-4 py-4">4</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4 cursor-pointer">
-                    <td className="px-4 py-4">
-                      IlleaglMemeberException("ADS")
-                    </td>
-                    <td className="px-4 py-4">
-                      Algorithmen und Datenstrukturen
-                    </td>
-                    <td className="px-4 py-4">5</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">k-CLIQUE</td>
-                    <td className="px-4 py-4">Theoretische Informatik</td>
-                    <td className="px-4 py-4">5</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">f(krass) -&gt; cool</td>
-                    <td className="px-4 py-4">Funktionale Programmierung</td>
-                    <td className="px-4 py-4">2</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">SQL not Sequel</td>
-                    <td className="px-4 py-4">Datenbanken-1</td>
-                    <td className="px-4 py-4">3</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">vektor collector</td>
-                    <td className="px-4 py-4">Data-Science</td>
-                    <td className="px-4 py-4">23</td>
-                  </tr>
-                  <tr className="hover:bg-gray-100 border-b  border-gray-200 py-4">
-                    <td className="px-4 py-4">AppDay - Markup Monkeys</td>
-                    <td className="px-4 py-4">FSR</td>
-                    <td className="px-4 py-4">4</td>
-                  </tr>
+                  {gruppen
+                    .filter(
+                      (g) =>
+                        g.name.toLowerCase().indexOf(search.toLowerCase()) !==
+                        -1
+                    )
+                    .map((g, i) => (
+                      <Gruppe key={i} history={history} {...g} />
+                    ))}
                 </tbody>
               </table>
             </div>
@@ -115,12 +97,21 @@ function MeineGruppen() {
                 </g>
               </svg>
 
-              <p className="leading-relaxed cursor-pointer mx-2 text-blue-600 hover:text-blue-600 text-sm">
-                1
-              </p>
-              <p className="leading-relaxed cursor-pointer mx-2 text-sm hover:text-blue-600">
-                2
-              </p>
+              {Array.from(
+                { length: Math.floor(total / 10) +1 },
+                (_, i) => i+1
+              ).map((v) =>
+                v == Math.floor(offset / 10) + 1 ? (
+                  <p className="leading-relaxed cursor-pointer mx-2 text-blue-600 hover:text-blue-600 text-sm">
+                    {v}
+                  </p>
+                ) : (
+                  <p className="leading-relaxed cursor-pointer mx-2 text-sm hover:text-blue-600">
+                    {v}
+                  </p>
+                )
+              )}
+
               <svg
                 className="h-6 w-6"
                 width="24"
@@ -146,28 +137,32 @@ function MeineGruppen() {
               <img
                 alt="Mathe Mann"
                 className="w-36 h-auto object-cover"
-                src="https://pbs.twimg.com/profile_images/1001710803261820928/DvdI4GJE_400x400.jpg"
+                src={user?.imageUrl || "https://via.placeholder.com/400"}
               />
               <div className="justify-self-start flex flex-col p-4 flex-grow">
-                <p className="text-2xl font-semibold">Mathe Mann</p>
+                <p className="text-2xl font-semibold">{user?.name}</p>
                 <div className="border my-2" />
                 <span className="flex justify-between gap-4 items-center">
-                  <p className="text-gray-500">Informatik</p>
-                  <p className="bg-green-500 text-white font-semibold py-1 px-2 rounded-full">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 inline mr-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <p className="text-sm inline">PRO</p>
+                  <p className="text-gray-500 uppercase">
+                    {Faculty[Number(user?.faculty)] || "Keine Fakultät"}
                   </p>
+                  {user?.isPro && (
+                    <p className="bg-green-500 text-white font-semibold py-1 px-2 rounded-full">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 inline mr-1"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <p className="text-sm inline">PRO</p>
+                    </p>
+                  )}
                 </span>
               </div>
             </div>
@@ -248,5 +243,16 @@ function MeineGruppen() {
     </div>
   );
 }
+
+const Gruppe = ({ id, name, module, users, history }: any) => (
+  <tr
+    className="hover:bg-gray-100 border-b border-gray-200 py-10 cursor-pointer"
+    onClick={() => history.push("/group/"+id)}
+  >
+    <td className="px-4 py-4">{name}</td>
+    <td className="px-4 py-4">{module}</td>
+    <td className="px-4 py-4">{users?.length}</td>
+  </tr>
+);
 
 export default MeineGruppen;

@@ -9,28 +9,60 @@ import React, {
 // Libs
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useHistory } from "react-router-dom";
 
 // Context
 import { User, UserContext } from "../context/User";
 
 // Component
 function Profil() {
+  const history = useHistory();
   // state
   const [user, setUser] = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setname] = useState("");
-  const [lastname, setlastname] = useState("");
+  const [lastName, setlastName] = useState("");
   const [bdate, setBday] = useState(new Date());
   const [minAge, setminAge] = useState(17);
   const [maxAge, setmaxAge] = useState(35);
+  const [studiengang, setStudiengang] = useState(0);
+  const [semester, setSemester] = useState(0);
 
   // Functions
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault();  
 
-    if (!user) return;
+    if (!user) return history.push("/login");
+
+    const body = JSON.stringify({
+      name: name,
+      lastName: lastName,
+      born: bdate,
+      email: email,
+      minAge: minAge,
+      maxAge: maxAge,
+      password: password,
+      faculty: studiengang,
+      semester: semester,
+    });
+    console.log(body)
+
+    fetch("https://api.noc-rostock.space/user/"+user?.id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          setUser(data);
+          history.push("/mygroups");
+        })
+        .catch(e => console.error(e));
   }
 
   // Effects
@@ -38,8 +70,12 @@ function Profil() {
     if (user) {
       setEmail(user.email);
       setname(user.name || "");
-      setlastname(user.lastname || "");
+      setlastName(user.lastName || "");
       setBday(new Date(user.born));
+      setminAge(user.minAge);
+      setmaxAge(user.maxAge);
+      setSemester(user.semester);
+      setStudiengang(user.faculty);
     }
   }, [user]);
 
@@ -56,7 +92,10 @@ function Profil() {
   return (
     <div className="inputs w-full max-w-2xl p-6 mx-auto">
       <h2 className="text-2xl text-gray-900">Mein Profil</h2>
-      <form className="mt-6 border-t border-gray-400 pt-4" onSubmit={handleSubmit}>
+      <form
+        className="mt-6 border-t border-gray-400 pt-4"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-full px-3 mb-6">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -89,7 +128,6 @@ function Profil() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Neues Passwort"
-              required
             />
           </div>
           <div className="w-full md:w-full px-3 mb-6">
@@ -99,7 +137,6 @@ function Profil() {
             <input
               className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
               type="file"
-              required
             />
           </div>
 
@@ -125,8 +162,8 @@ function Profil() {
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
-                  value={lastname}
-                  onChange={(e) => setlastname(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setlastName(e.target.value)}
                   required
                 />
               </div>
@@ -150,11 +187,17 @@ function Profil() {
                 studiengang
               </label>
               <div className="flex-shrink w-full inline-block relative">
-                <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
-                  <option>wähle ...</option>
-                  <option>Informatik</option>
-                  <option>ITTI</option>
-                  <option>Wirtschaftsinformatik</option>
+                <select
+                  className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded"
+                  value={studiengang}
+                  onChange={(e) => setStudiengang(Number(e.target.value))}
+                >
+                  <option value={0}>Sonstiges</option>
+                  <option value={1}>INFORMATIK</option>
+                  <option value={2}>ITTI</option>
+                  <option value={3}>WINF</option>
+                  <option value={4}>AGRAING</option>
+                  <option value={5}>SCHIFFSBAU</option>
                 </select>
                 <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600">
                   <svg
@@ -173,7 +216,11 @@ function Profil() {
                 semester
               </label>
               <div className="flex-shrink w-full inline-block relative">
-                <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded">
+                <select
+                  className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded "
+                  value={semester}
+                  onChange={(e) => setSemester(Number(e.target.value))}
+                >
                   <option>wähle ...</option>
                   <option>1</option>
                   <option>2</option>
