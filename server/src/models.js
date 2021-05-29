@@ -180,12 +180,11 @@ model Response {
 
 	// study group
 	studyGroup.belongsToMany(user, { through: "allocate" });
-	studyGroup.belongsToMany(tag, { through: "assign" });
+	studyGroup.belongsToMany(tag, { through: "tag_group" });
 
 	// tag
-	tag.belongsToMany(studyGroup, { through: "assign" });
-	tag.hasMany(question);
-	tag.hasMany(response);
+	tag.belongsToMany(studyGroup, { through: "tag_group" });
+	tag.belongsToMany(question, { through: "tag_question" })
 
 	// question
 	// question.hasMany(response);

@@ -10,7 +10,7 @@ node_modules/
 
 # binary data
 
-data/*
+data/*.sqlite
 
 # credentials
 
