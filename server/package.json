@@ -21,6 +21,8 @@
   "homepage": "https://github.com/ArcticSpaceFox/AppDay_21_MM#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "sequelize": "^6.6.2"
+    "pg": "^8.6.0",
+    "sequelize": "^6.6.2",
+    "sqlite3": "^5.0.2"
   }
 }

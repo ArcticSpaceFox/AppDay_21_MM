@@ -14,8 +14,4 @@ data/*
 
 # credentials
 
-config/secret.json
-
-# internal documents
-
-vpm.xml
+configuration/secret.json
