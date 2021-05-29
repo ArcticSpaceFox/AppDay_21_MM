@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/ArcticSpaceFox/AppDay_21_MM#readme",
   "dependencies": {
+    "@feathersjs/express": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
     "express": "^4.17.1",
+    "feathers-sequelize": "^6.2.0",
     "pg": "^8.6.0",
     "sequelize": "^6.6.2",
     "sqlite3": "^5.0.2"
