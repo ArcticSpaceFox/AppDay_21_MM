@@ -19,13 +19,13 @@ const auth0 = new Auth0Client({
   // they can retrieve the tokens stored in local storage.
   // https://auth0.com/docs/libraries/auth0-spa-js#change-storage-options
   cacheLocation: 'localstorage',
-  audience: process.env.AUTH0_AUDIENCE,
+  // audience: process.env.AUTH0_AUDIENCE,
 
   // @MARK: useRefreshTokens is required for automatically extending sessions
   // beyond that set in the initial JWT expiration.
   //
   // @MARK: https://auth0.com/docs/tokens/refresh-tokens
-  // useRefreshTokens: true,
+  useRefreshTokens: true,
 })
 
 const App = () => (

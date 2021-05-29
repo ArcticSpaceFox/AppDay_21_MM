@@ -42,7 +42,7 @@ function Login() {
         <div className="flex items-center px-2 py-3">
           <div className="w-full max-w-xs">
             <form
-              className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+              className=" px-8 pt-6 pb-8 mb-4"
               onSubmit={(e) => handleSubmit(e)}
             >
               <div className="mb-4">
@@ -88,7 +88,7 @@ function Login() {
               </div>
             </form>
             <p className="text-center text-gray-500 text-xs">
-              &copy;{new Date().getFullYear()} Bro-Boerse
+              &copy;{new Date().getFullYear()} Studi-Boerse
             </p>
           </div>
         </div>
