@@ -100,7 +100,7 @@ function Gruppen() {
               { length: Math.floor(total / 10) + 1 },
               (_, i) => i + 1
             ).map((v) =>
-              v == Math.floor(offset / 10) + 1 ? (
+              v == Math.floor(offset / 10)  ? (
                 <p className="leading-relaxed cursor-pointer mx-2 text-blue-600 hover:text-blue-600 text-sm">
                   {v}
                 </p>
@@ -109,7 +109,7 @@ function Gruppen() {
                   {v}
                 </p>
               )
-            )}
+            )} 
 
             <svg
               className="h-6 w-6"

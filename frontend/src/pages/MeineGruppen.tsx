@@ -101,9 +101,9 @@ function MeineGruppen() {
 
               {Array.from(
                 { length: Math.floor(total / 10) +1 },
-                (_, i) => i+1
+                (_, i) => i+1 
               ).map((v) =>
-                v == Math.floor(offset / 10) + 1 ? (
+                v == Math.floor(offset / 10) ? (
                   <p className="leading-relaxed cursor-pointer mx-2 text-blue-600 hover:text-blue-600 text-sm">
                     {v}
                   </p>
@@ -183,7 +183,7 @@ function MeineGruppen() {
                 />
                 <div className="mx-3">
                   <h2 className="text-xl font-semibold text-gray-800">
-                    Hallo Karl
+                    Hallo Professor Wolf o/
                   </h2>
                   <p className="text-gray-600">
                     Sara hat geantwortet auf{" "}
@@ -205,7 +205,7 @@ function MeineGruppen() {
                 />
                 <div className="mx-3">
                   <h2 className="text-xl font-semibold text-gray-800">
-                    Wie meinst du das?
+                    Wie meinen sie das genau?
                   </h2>
                   <p className="text-gray-600">
                     Jonny hat geantwortet auf{" "}
@@ -227,7 +227,7 @@ function MeineGruppen() {
                 />
                 <div className="mx-3">
                   <h2 className="text-xl font-semibold text-gray-800">
-                    Ich kann dir bei LOPRO helfen :3
+                    Ich könnte ihnen bei den Hauptserver helfen 
                   </h2>
                   <p className="text-gray-600">
                     Emilie hat geantwortet auf{" "}

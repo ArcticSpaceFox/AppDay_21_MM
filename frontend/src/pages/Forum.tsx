@@ -63,7 +63,7 @@ function Forum() {
           </div>
         </div>
         <div className="flex-grow grid grid-cols-1 gap-4">
-          {faqitems?.filter((item) => (item.title.indexOf(search) !== -1))?.map((f:any, i:number) => (
+          {faqitems?.filter((item) => (item.title.toLowerCase().indexOf(search.toLowerCase()) !== -1))?.map((f:any, i:number) => (
               <FAQitem
                 key={i}
                 {...f}
