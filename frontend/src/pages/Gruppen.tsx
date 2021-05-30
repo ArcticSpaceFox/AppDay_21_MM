@@ -19,7 +19,7 @@ function Gruppen() {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    fetch("api.noc-rostock.space/study-group", {}).then(res => res.json()).then(data => {
+    fetch("http://localhost:6002/study-group", {}).then(res => res.json()).then(data => {
       setGruppen(data.data);
       setOffset(Number(data.offset));
       setTotal(Number(data.total));

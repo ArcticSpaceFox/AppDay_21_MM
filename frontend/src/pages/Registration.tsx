@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from 'axios'
 
 // Component
 function Registration({ ...props }) {
@@ -11,20 +12,14 @@ function Registration({ ...props }) {
   const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
-    fetch("https://api.noc-rostock.space/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    axios.post("http://localhost:6002/user", {
         name: name,
         lastName: lastName,
         email: email,
         password: password,
-      }),
+      
     })
-      .then((res) => res.json())
-      .then((data) => history.push("/signin"));
+      .then((res) => history.push("/signin"));
   };
 
   return (

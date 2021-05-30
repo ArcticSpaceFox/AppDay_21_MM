@@ -49,7 +49,7 @@ function Profil() {
     });
     console.log(body)
 
-    fetch("https://api.noc-rostock.space/user/"+user?.id, {
+    fetch("http://localhost:6002/user/"+user?.id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

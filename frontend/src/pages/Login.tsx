@@ -20,7 +20,7 @@ function Login() {
     const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
         data.preventDefault();
 
-        fetch("https://api.noc-rostock.space/login", {
+        fetch("http://localhost:6002/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

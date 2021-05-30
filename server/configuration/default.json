@@ -4,7 +4,7 @@
     "port": 6002
   },
   "database": {
-    "secret": true,
+    "secret": false,
     "dialect": "sqlite",
     "storage": "data/storage.sqlite"
   }
