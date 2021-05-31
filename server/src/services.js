@@ -70,32 +70,23 @@ class SessionService {
 // groups of a user
 class UserGroupService {
 
-	constructor(app) {
+	constructor(app, options) {
 		this.sequelize = app.get("sequelize");
+		this.options = options;
 	}
 
-	async get(id) {
+	async find(param) {
 		const { user, "study-group": sg } = this.sequelize.models;
-		const result = await user.findOne({
+		const q = {
 			where: {
 				id
 			},
 			include: [sg]
-		});
+		}
+
+		const result = await user.findOne(addPagination(this.options, user, q, param));
 
 		return result["study-groups"];
-	}
-
-	async create(id, param) {
-		const { "study-group": sg } = this.sequelize.models;
-		
-		const available = await sg.findAll({
-			where: {
-				id: {
-					$in: id
-				}
-			}
-		})
 	}
 
 }
@@ -109,15 +100,12 @@ class GroupUserService {
 
 	async get(id) {
 		const { user, "study-group": sg } = this.sequelize.models;
-		const result = await sg.findOne({
+		return await sg.findOne({
 			where: {
 				id
 			},
 			include: [user]
 		});
-
-		console.log("result", result)
-		return result;
 	}
 
 }
@@ -149,11 +137,19 @@ class GroupSearchService {
 	}
 
 	async find(params) {
-		const { "study-group": sg } = this.sequelize.models;
+		const { "study-group": sg, tag, user } = this.sequelize.models;
 		const { query } = params;
 
 		if(!query) {
 			throw Error("bad query");
+		}
+
+		const base = {
+			include: [{
+				model: tag
+			}, {
+				model: user
+			}]
 		}
 
 		const q = (query.content) ? {
@@ -163,6 +159,8 @@ class GroupSearchService {
 				}
 			}
 		} : {}
+
+		Object.assign(q, base);
 
 		return addPagination(this.options, sg, q, params);
 	}
@@ -189,14 +187,30 @@ async function initializeServices(app) {
 	}
 
 	app.use("/login", new SessionService(app));
-	app.use("/user-group", new UserGroupService(app));
+	//app.use("/user-group", new UserGroupService(app));
 	app.use("/group-user", new GroupUserService(app));
 	// app.use("/group-tags", new GroupTagService(app));
 	app.use("/search-group", new GroupSearchService(app, { paginate }));
 
 	app.service("user").hooks({
 		before: {
-			find: [userGroupHook]
+			find:  [async context => {
+				if(!context.params.sequelize) {
+					context.params.sequelize = {};
+				}
+
+				const sequelize = context.params.sequelize;
+				sequelize.raw = false;
+				sequelize.include = [
+					{
+						model: context.app.services["study-group"].Model,
+						include: [{
+							model: context.app.services["user"].Model,
+						}]
+					}
+				];
+				return context;
+			}]
 		}
 	});
 
@@ -212,6 +226,9 @@ async function initializeServices(app) {
 				sequelize.include = [
 					{
 						model: context.app.services["tag"].Model
+					},
+					{
+						model: context.app.services["user"].Model
 					}
 				];
 				return context;

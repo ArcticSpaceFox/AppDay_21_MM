@@ -44,7 +44,10 @@ async function importData(app, options) {
 		const model = models[key];
 		console.log("importing data for model", key);
 
-		await model.bulkCreate(entries);
+		for(let e of entries) {
+			await model.create(e);
+		}
+
 	}
 }
 
@@ -78,7 +81,6 @@ async function main() {
 	}
 
 	const doReset = (args[args.length - 1] === "--reset");
-	console.log("doReset", doReset);
 
 	const options = { path }
 

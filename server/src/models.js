@@ -75,6 +75,9 @@ async function defineModels(sequelize) {
 			type: DataTypes.TEXT,
 			allowNull: false
 		},
+		description: {
+			type: DataTypes.TEXT
+		},
 		module: {
 			type: DataTypes.TEXT
 		}
@@ -89,8 +92,7 @@ async function defineModels(sequelize) {
 			autoIncrement: true
 		},
 		name: {
-			type: DataTypes.INTEGER,
-			name: DataTypes.TEXT
+			type: DataTypes.TEXT
 		}
 	}, {
 		tableName: "tag"
